@@ -2,11 +2,10 @@
   <div class="row">
     <div class="col-md-12">
 
-
       <div *ngFor="let user of appUsers" class="ibox float-e-margins">
         <div class="ibox-title">{{user.name}} {{user.surname}}</div>
         <div class="ibox-content">
-          <app-todolist [todos]="user.todos"></app-todolist>
+          <app-tasklist [userId]="user.id"></app-tasklist>
         </div>
       </div>
 

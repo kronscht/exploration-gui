@@ -4,24 +4,24 @@ export interface AppUserInput {
   name?: Maybe<string>;
 
   surname?: Maybe<string>;
-
-  todos?: Maybe<(Maybe<TodoInput>)[]>;
 }
 
-export interface TodoInput {
-  description?: Maybe<string>;
-
-  done?: Maybe<boolean>;
-
-  appUser?: Maybe<AppUserInput>;
-}
-
-export interface UpdateTodoInput {
+export interface UpdateTaskInput {
   id: string;
 
   description?: Maybe<string>;
 
   done?: Maybe<boolean>;
+}
+
+export interface SaveTaskInput {
+  id?: Maybe<string>;
+
+  description?: Maybe<string>;
+
+  done?: Maybe<boolean>;
+
+  userId: string;
 }
 
 // ====================================================
@@ -30,19 +30,21 @@ export interface UpdateTodoInput {
 
 export interface Query {
   appUsers?: Maybe<(Maybe<AppUser>)[]>;
+
+  tasks?: Maybe<(Maybe<Task>)[]>;
 }
 
+/** model.AppUser */
 export interface AppUser {
   id?: Maybe<string>;
 
   name?: Maybe<string>;
 
   surname?: Maybe<string>;
-
-  todos?: Maybe<(Maybe<Todo>)[]>;
 }
 
-export interface Todo {
+/** model.Task */
+export interface Task {
   id?: Maybe<string>;
 
   description?: Maybe<string>;
@@ -55,16 +57,24 @@ export interface Todo {
 export interface Mutation {
   writeAppUser?: Maybe<AppUser>;
 
-  updateTodo?: Maybe<Todo>;
+  updateTask?: Maybe<Task>;
+
+  saveTask?: Maybe<Task>;
 }
 
 // ====================================================
 // Arguments
 // ====================================================
 
+export interface TasksQueryArgs {
+  id: string;
+}
 export interface WriteAppUserMutationArgs {
   input?: Maybe<AppUserInput>;
 }
-export interface UpdateTodoMutationArgs {
-  input?: Maybe<UpdateTodoInput>;
+export interface UpdateTaskMutationArgs {
+  input?: Maybe<UpdateTaskInput>;
+}
+export interface SaveTaskMutationArgs {
+  input?: Maybe<SaveTaskInput>;
 }

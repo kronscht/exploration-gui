@@ -20,6 +20,29 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "tasks",
+            "description": "",
+            "args": [
+              {
+                "name": "id",
+                "description": "",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": { "kind": "OBJECT", "name": "Task", "ofType": null }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -30,7 +53,7 @@
       {
         "kind": "OBJECT",
         "name": "AppUser",
-        "description": "",
+        "description": "model.AppUser",
         "fields": [
           {
             "name": "id",
@@ -53,18 +76,6 @@
             "description": "",
             "args": [],
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "todos",
-            "description": "",
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": { "kind": "OBJECT", "name": "Todo", "ofType": null }
-            },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -96,8 +107,8 @@
       },
       {
         "kind": "OBJECT",
-        "name": "Todo",
-        "description": "",
+        "name": "Task",
+        "description": "model.Task",
         "fields": [
           {
             "name": "id",
@@ -172,7 +183,7 @@
             "deprecationReason": null
           },
           {
-            "name": "updateTodo",
+            "name": "updateTask",
             "description": "",
             "args": [
               {
@@ -180,13 +191,32 @@
                 "description": "",
                 "type": {
                   "kind": "INPUT_OBJECT",
-                  "name": "UpdateTodoInput",
+                  "name": "UpdateTaskInput",
                   "ofType": null
                 },
                 "defaultValue": null
               }
             ],
-            "type": { "kind": "OBJECT", "name": "Todo", "ofType": null },
+            "type": { "kind": "OBJECT", "name": "Task", "ofType": null },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "saveTask",
+            "description": "",
+            "args": [
+              {
+                "name": "input",
+                "description": "",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "SaveTaskInput",
+                  "ofType": null
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": { "kind": "OBJECT", "name": "Task", "ofType": null },
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -213,20 +243,6 @@
             "description": "",
             "type": { "kind": "SCALAR", "name": "String", "ofType": null },
             "defaultValue": null
-          },
-          {
-            "name": "todos",
-            "description": "",
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "INPUT_OBJECT",
-                "name": "TodoInput",
-                "ofType": null
-              }
-            },
-            "defaultValue": null
           }
         ],
         "interfaces": null,
@@ -235,40 +251,7 @@
       },
       {
         "kind": "INPUT_OBJECT",
-        "name": "TodoInput",
-        "description": "",
-        "fields": null,
-        "inputFields": [
-          {
-            "name": "description",
-            "description": "",
-            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
-            "defaultValue": null
-          },
-          {
-            "name": "done",
-            "description": "",
-            "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
-            "defaultValue": null
-          },
-          {
-            "name": "appUser",
-            "description": "",
-            "type": {
-              "kind": "INPUT_OBJECT",
-              "name": "AppUserInput",
-              "ofType": null
-            },
-            "defaultValue": null
-          }
-        ],
-        "interfaces": null,
-        "enumValues": null,
-        "possibleTypes": null
-      },
-      {
-        "kind": "INPUT_OBJECT",
-        "name": "UpdateTodoInput",
+        "name": "UpdateTaskInput",
         "description": "",
         "fields": null,
         "inputFields": [
@@ -292,6 +275,45 @@
             "name": "done",
             "description": "",
             "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+            "defaultValue": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "SaveTaskInput",
+        "description": "",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": "",
+            "type": { "kind": "SCALAR", "name": "ID", "ofType": null },
+            "defaultValue": null
+          },
+          {
+            "name": "description",
+            "description": "",
+            "type": { "kind": "SCALAR", "name": "String", "ofType": null },
+            "defaultValue": null
+          },
+          {
+            "name": "done",
+            "description": "",
+            "type": { "kind": "SCALAR", "name": "Boolean", "ofType": null },
+            "defaultValue": null
+          },
+          {
+            "name": "userId",
+            "description": "",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": { "kind": "SCALAR", "name": "ID", "ofType": null }
+            },
             "defaultValue": null
           }
         ],

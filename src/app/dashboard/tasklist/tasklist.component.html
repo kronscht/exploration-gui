@@ -1,0 +1,19 @@
+<ul class="todo-list m-t small-list no-background">
+  <li *ngFor="let task of tasks">
+    <label class="container"><span *ngIf="task.id" [ngClass]="{'done': task.done}">{{task.description}}</span>
+      <input type="checkbox" [(ngModel)]="task.done" (click)="updateTask(task.id)">
+      <span class="checkmark"></span>
+    </label>
+  </li>
+  <li>
+    <div class="row m-t-5">
+      <div class="col-md-11">
+        <input type="text" class="form-control" placeholder="Task" [(ngModel)]="taskDescription" />
+
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary btn-sm" (click)="addTask()">Add</button>
+      </div>
+    </div>
+  </li>
+</ul>

@@ -7,15 +7,10 @@ export const ALL_APPLICATION_USERS = gql`
         id
         name
         surname
-        todos {
-          id
-          description
-          done
-        }
     }
   }
 `;
 
 export interface ApplicationUsersQueryResponse {
-    appUsers: AppUser[]
+  appUsers: AppUser[]
 }

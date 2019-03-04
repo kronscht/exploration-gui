@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Apollo, Subscription } from 'apollo-angular';
 import { SaveTaskInput, Task, UpdateTaskInput } from 'src/app/apollo/model/graphql';
-import { GET_TASKS, SAVE_TASK, TaskMutationResponse, TasksQueryResponse, UPDATE_TASK } from './tasklist.graphql';
+import { GET_TASKS, SAVE_TASK, DELETE_TASK, TaskMutationResponse, TasksQueryResponse, UPDATE_TASK } from './tasklist.graphql';
 
 @Component({
   selector: 'app-tasklist',
@@ -101,6 +101,25 @@ export class TasklistComponent implements OnInit {
     }).subscribe((response) => {
       // this.tasks.push((<TaskMutationResponse>response.data).saveTask);
     });
+  }
+
+  /**
+   * Deletes an existing task from the list.
+   * @param taskId The id for the task to delete
+   */
+  public deleteTask(taskId: string) {
+    this.apollo.mutate({
+      mutation: DELETE_TASK,
+      variables: {
+        id: taskId
+      },
+      refetchQueries: [{
+        query: GET_TASKS,
+        variables: {
+          id: this.userId
+        }
+      }]
+    }).subscribe();
   }
 
   //#region Helper

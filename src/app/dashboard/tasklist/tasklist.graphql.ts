@@ -35,7 +35,12 @@ mutation SaveTask($input: SaveTaskInput) {
   }
 }  
 `
-
 export interface TaskMutationResponse {
     saveTask: Task;
 }
+
+export const DELETE_TASK = gql`
+mutation DeleteTask($id: ID!) {
+  deleteTask(id: $id)
+}
+`

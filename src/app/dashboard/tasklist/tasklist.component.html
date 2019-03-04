@@ -1,13 +1,16 @@
 <ul class="todo-list m-t small-list no-background">
   <li *ngFor="let task of tasks">
-    <label class="container"><span *ngIf="task.id" [ngClass]="{'done': task.done}">{{task.description}}</span>
-      <input type="checkbox" [(ngModel)]="task.done" (click)="updateTask(task.id)">
-      <span class="checkmark"></span>
-    </label>
+    <div>
+      <label class="container"><span *ngIf="task.id" [ngClass]="{'done': task.done}">{{task.description}}</span>
+        <input type="checkbox" [(ngModel)]="task.done" (click)="updateTask(task.id)">
+        <span class="checkmark"></span>
+      </label>
+      <button class="btn btn-danger btn-sm pull-right" (click)="deleteTask(task.id)">X</button>
+    </div>
   </li>
   <li>
     <div class="row m-t-5">
-      
+
       <div class="col-md-6">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Task" [(ngModel)]="taskDescription" (keydown.enter)="addTask()" />

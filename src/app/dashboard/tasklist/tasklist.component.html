@@ -7,13 +7,17 @@
   </li>
   <li>
     <div class="row m-t-5">
-      <div class="col-md-11">
-        <input type="text" class="form-control" placeholder="Task" [(ngModel)]="taskDescription" />
-
-      </div>
-      <div class="col-md-1">
+      
+      <div class="col-md-6">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Task" [(ngModel)]="taskDescription" (keydown.enter)="addTask()" />
+        </div>
         <button class="btn btn-primary btn-sm" (click)="addTask()">Add</button>
       </div>
+
+      <div class="col-md-6">
+      </div>
+
     </div>
   </li>
 </ul>

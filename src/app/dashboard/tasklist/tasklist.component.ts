@@ -10,13 +10,26 @@ import { GET_TASKS, SAVE_TASK, TaskMutationResponse, TasksQueryResponse, UPDATE_
 })
 export class TasklistComponent implements OnInit {
 
+  /**
+   * The user in scope.
+   */
   @Input()
   userId: string;
 
+  /**
+   * All tasks for an unser.
+   */
   tasks: Task[] = [];
 
+  /**
+   * Model for the new task to create.
+   */
   taskDescription;
 
+  /**
+   * Constructor.
+   * @param apollo The apollo client
+   */
   constructor(private apollo: Apollo) { }
 
   ngOnInit() {
@@ -24,32 +37,33 @@ export class TasklistComponent implements OnInit {
   }
 
   /**
-   * Gets all tasks for a specific user
+   * Gets all tasks for a specific user.
    */
   public getTasks() {
-    this.apollo.query({
+    this.apollo.watchQuery({
       query: GET_TASKS,
       variables: {
         id: this.userId
       }
-    }).subscribe((response) => {
+    }).valueChanges.subscribe((response) => {
       this.tasks = (<TasksQueryResponse>response.data).tasks;
-    })
-
+    });
   }
 
   /**
-   * Creates a new task
+   * Creates a new task.
    */
   public addTask() {
-    const tempDescription = this.taskDescription;
 
-    const task = this.getSaveTaskInputTemplate();
-    task.description = tempDescription;
-    task.userId = this.userId
-
-    this.saveTask(task);
-    this.taskDescription = '';
+    if (this.taskDescription) {
+      const tempDescription = this.taskDescription;
+      const task = this.getSaveTaskInputTemplate(tempDescription);
+      this.saveTask(task);
+      // reset
+      this.taskDescription = '';
+    } else {
+      alert("Cannot save empty task");
+    }
   }
 
   /**
@@ -77,20 +91,34 @@ export class TasklistComponent implements OnInit {
       mutation: SAVE_TASK,
       variables: {
         input: task
-      }
+      },
+      refetchQueries: [{
+        query: GET_TASKS,
+        variables: {
+          id: this.userId
+        }
+      }]
     }).subscribe((response) => {
-      this.tasks.push((<TaskMutationResponse>response.data).saveTask);
+      // this.tasks.push((<TaskMutationResponse>response.data).saveTask);
     });
   }
 
   //#region Helper
 
-  public findTask(id: string): Task {
+  /**
+   * Finds a task by its id in the list of tasks.
+   * @param id The id to search for
+   */
+  private findTask(id: string): Task {
     let tmp = this.tasks.find(x => x.id === id);
     return tmp;
   }
 
-  public mapToInput(task: Task): UpdateTaskInput {
+  /**
+   * Converts a Task obejct to a UpdateTaskInput object.
+   * @param task The original task
+   */
+  private mapToInput(task: Task): UpdateTaskInput {
     return {
       id: task.id,
       description: task.description,
@@ -98,8 +126,8 @@ export class TasklistComponent implements OnInit {
     };
   }
 
-  public getSaveTaskInputTemplate(): SaveTaskInput {
-    return { id: null, done: false, description: '', userId: null };
+  private getSaveTaskInputTemplate(description: string): SaveTaskInput {
+    return { id: null, done: false, description: description, userId: this.userId };
   }
 
   //#endregion
